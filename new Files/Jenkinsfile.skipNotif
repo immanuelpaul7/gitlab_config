@@ -1,0 +1,100 @@
+pipeline {
+  agent {
+    label 'master'
+  }
+  stages {
+        stage('DevATF') {
+          when {
+            branch 'dev'
+          }
+          steps {
+            snDevOpsStep()
+          }
+        }
+        stage('DevHealthScan') {
+          when {
+            branch 'dev'
+          }
+          steps {
+            snDevOpsStep()
+          }
+        }
+    stage('QADeploy') {
+      when {
+        branch 'qa'
+      }
+      stages {
+        stage('QADeployFromGit') {
+          steps {
+            snDevOpsStep()
+          }
+        }
+        stage('QAPublishToAppRepo') {
+          steps {
+            snDevOpsStep()
+          }
+        }
+        stage('QADeployFromAppRepo') {
+          steps {
+            snDevOpsStep()
+          }
+        }
+      }
+    }
+    stage('QAATF') {
+      when {
+        branch 'qa'
+      }
+      steps {
+        snDevOpsStep()
+      }
+    }
+    stage('StageDeploy') {
+      when {
+        branch 'stage'
+      }
+      stages {
+        stage('StageDeployFromGit') {
+          steps {
+            snDevOpsStep()
+          }
+        }
+        stage('StagePublishToAppRepo') {
+          steps {
+            snDevOpsStep()
+          }
+        }
+        stage('StageDeployFromAppRepo') {
+          steps {
+            snDevOpsStep()
+          }
+        }
+      }
+    }
+    stage('StageATF') {
+      when {
+        branch 'stage'
+      }
+      steps {
+        snDevOpsStep()
+      }
+    }
+    stage('ProdDeploy') {
+      when {
+        branch 'master'
+      }
+      steps {
+        snDevOpsStep()
+      }
+    }
+  }
+}
+
+#Some dummy comments to see if this doesnt get associated.
+// Another check/
+// This mustn't get associated
+// Removed older lines
+// Lets do this
+// This must not get associated
+// This should be associated
+// Lets see another commit
