@@ -6,19 +6,13 @@ stages:
 build_1:
   stage: build
   tags:
-    - local-runner1
+    - perli-runner1
   script:
     - mvn compile
-build_2:
-  stage: build
-  tags:
-    - local-runner1
-  script:
-    - echo 'Build2'
 test:
   stage: test
   tags:
-    - local-runner1
+    - perli-runner1
   script:
     - mvn package
   artifacts:
@@ -30,7 +24,7 @@ test:
 deploy:
   stage: deploy
   tags:
-    - local-runner1
+    - perli-runner1
   when: manual
   allow_failure: false
   script:
